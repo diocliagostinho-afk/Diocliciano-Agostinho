@@ -1,139 +1,646 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>💘 Pergunta importante</title>
+  <title>Relatório do Sistema</title>
   <style>
     :root{
-      --bg1:#ffd7e5; --bg2:#ffeef5; --card:rgba(255,255,255,.88);
-      --text:#1f1f1f; --yes:#ff2d6f; --yes2:#e91e63; --no:#e9e9e9;
+      --bg:#0b0f14;
+      --card:#0f1621;
+      --card2:#0d1320;
+      --txt:#e8eef6;
+      --muted:#9fb0c3;
+      --accent:#ff2d6f;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 24px 80px rgba(0,0,0,.55);
     }
     *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
     body{
-      margin:0; min-height:100vh; display:grid; place-items:center; overflow:hidden;
-      background: radial-gradient(circle at 20% 20%, var(--bg2), var(--bg1));
-      color:var(--text);
+      margin:0; min-height:100vh; display:grid; place-items:center;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(255,45,111,.16), transparent),
+                  radial-gradient(900px 500px at 80% 70%, rgba(34,197,94,.10), transparent),
+                  var(--bg);
+      color:var(--txt);
     }
-    .wrap{width:min(560px,92vw); padding:24px; position:relative;}
+    .wrap{width:min(720px,92vw); padding:18px;}
+    .topbar{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px; margin-bottom:12px; opacity:.9;
+      font-size:13px; color:var(--muted);
+    }
+    .pill{
+      padding:6px 10px; border:1px solid var(--border); border-radius:999px;
+      background: rgba(255,255,255,.03);
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent2); box-shadow:0 0 0 3px rgba(34,197,94,.15)}
     .card{
-      background:var(--card); border:1px solid rgba(255,255,255,.65);
-      border-radius:22px; padding:26px 22px 22px; text-align:center;
-      backdrop-filter: blur(10px);
-      box-shadow:0 20px 60px rgba(0,0,0,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
     }
-    .emoji{
-      width:78px;height:78px;margin:0 auto 10px;border-radius:999px;
-      background:#ffe1a8;display:grid;place-items:center;font-size:34px;position:relative;
+    .cardHeader{
+      padding:16px 16px 12px;
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
-    .emoji::after{content:"❤";position:absolute;right:-8px;top:-10px;font-size:22px;transform:rotate(10deg)}
-    h1{font-size:24px;margin:10px 0 16px;font-weight:900}
+    .title{
+      font-weight:900; letter-spacing:.2px; display:flex; align-items:center; gap:10px;
+    }
+    .badge{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--border); padding:4px 8px; border-radius:999px;
+      background: rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+    .content{padding:16px;}
+    .big{
+      font-size:22px; font-weight:900; margin:0 0 8px;
+      line-height:1.15;
+    }
+    .sub{margin:0 0 14px; color:var(--muted); line-height:1.35;}
+    .alert{
+      border:1px solid rgba(239,68,68,.35);
+      background: rgba(239,68,68,.09);
+      border-radius:14px;
+      padding:12px;
+      display:flex; gap:10px; align-items:flex-start;
+      margin:12px 0;
+    }
+    .alert b{color:#ffd3db}
+    .kvs{
+      display:grid; gap:10px;
+      margin: 14px 0 6px;
+    }
+    .kv{
+      padding:12px; border-radius:14px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--card2);
+      display:flex; justify-content:space-between; gap:14px;
+      font-size:14px;
+    }
+    .kv span{color:var(--muted)}
+    .kv b{font-weight:900}
+    .hr{height:1px;background:var(--border); margin:14px 0}
     .buttons{
-      position:relative; height:78px;
-      display:flex; justify-content:center; align-items:center; gap:14px;
-      margin-top:10px;
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:14px;
+      position:relative;
     }
     button{
-      border:0;border-radius:999px;padding:14px 26px;font-weight:900;font-size:18px;
-      cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent;
-      transition: transform .12s ease, background .12s ease;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color:var(--txt);
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
-    #yesBtn{background:var(--yes);color:#fff;box-shadow:0 14px 30px rgba(255,45,111,.25)}
-    #yesBtn:hover{background:var(--yes2);transform:scale(1.03)}
-    #noBtn{
-      background:var(--no);color:#444;position:absolute; left:60%; top:10px;
-      box-shadow:0 10px 20px rgba(0,0,0,.10);
+    button:hover{transform: translateY(-1px); background: rgba(255,255,255,.06);}
+    button.primary{border-color: rgba(255,45,111,.45); background: rgba(255,45,111,.12)}
+    button.good{border-color: rgba(34,197,94,.45); background: rgba(34,197,94,.10)}
+    button.warn{border-color: rgba(245,158,11,.45); background: rgba(245,158,11,.10)}
+    button.danger{border-color: rgba(239,68,68,.45); background: rgba(239,68,68,.10)}
+    button:disabled{opacity:.55; cursor:not-allowed; transform:none;}
+    .tiny{font-size:12px;color:var(--muted);margin-top:10px}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .progressWrap{margin:14px 0 4px;}
+    .progressLine{
+      height:10px; border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
     }
-    .hint{margin-top:10px;font-size:13px;opacity:.75}
-    .modal{
-      position:fixed; inset:0; display:none; place-items:center;
-      background:rgba(0,0,0,.35); padding:18px;
+    .progressBar{
+      height:100%; width:0%;
+      background: linear-gradient(90deg, rgba(255,45,111,.9), rgba(34,197,94,.9));
+      transition: width .35s ease;
     }
-    .modal.open{display:grid}
-    .modalCard{
-      width:min(560px,92vw); background:#fff; border-radius:22px; padding:22px;
-      text-align:center; box-shadow:0 30px 80px rgba(0,0,0,.30);
+    .bars{display:grid; gap:10px; margin-top:12px;}
+    .barRow{display:grid; grid-template-columns: 140px 1fr 60px; gap:10px; align-items:center;}
+    .barRow .name{color:var(--muted); font-size:13px;}
+    .barTrack{
+      height:10px; border-radius:999px; border:1px solid var(--border);
+      background: rgba(255,255,255,.04); overflow:hidden;
     }
-    .modalCard h2{margin:0 0 10px}
-    .modalCard p{margin:0 0 16px; line-height:1.35}
-    .closeBtn{background:#111;color:#fff;padding:12px 18px;font-size:16px}
+    .barFill{height:100%; width:0%; background: rgba(255,255,255,.55); transition: width .35s ease;}
+    .barVal{font-size:13px; color:var(--muted); text-align:right;}
+    .footerNote{
+      padding:12px 16px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .shake{animation: shake .35s ease;}
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-6px)}
+      50%{transform:translateX(6px)}
+      75%{transform:translateX(-4px)}
+    }
+
+    /* botão fujão: quando ativado, vira absolute dentro da área .buttons */
+    .runner{
+      position:absolute !important;
+      right:0;
+      top:0;
+      will-change: left, top;
+    }
+
+    /* “Matrix flash” (para susto leve) */
+    .flash{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background: rgba(0,255,120,.08);
+      opacity:0;
+      transition: opacity .15s ease;
+    }
+    .flash.on{opacity:1;}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="card">
-      <div class="emoji">🐣</div>
-      <h1 id="question">Eneida, quer ser minha valentine? 💘</h1>
+    <div class="topbar">
+      <div class="pill"><span class="dot"></span><span id="statusText">Sistema online</span></div>
+      <div class="pill mono" id="sessionPill">Sessão: DJ01</div>
+    </div>
 
-      <div class="buttons" id="arena">
-        <button id="yesBtn">Sim</button>
-        <button id="noBtn" aria-label="Não">Não</button>
+    <div class="card" id="card">
+      <div class="flash" id="flash"></div>
+
+      <div class="cardHeader">
+        <div class="title">
+          <span>🧾</span>
+          <span id="headerTitle">Relatório de Atividade</span>
+        </div>
+        <span class="badge mono" id="stepBadge">PASSO 1/7</span>
       </div>
 
-      <div class="hint" id="hint">Dica: o “Não” tá meio tímido 😈</div>
-    </div>
-  </div>
+      <div class="content" id="content"></div>
 
-  <div class="modal" id="modal">
-    <div class="modalCard">
-      <h2>Fechado 😍</h2>
-      <p>Eneida, vamos sair para gastar no 14 de fevereiro. <br/>Obrigado, amor. 💖</p>
-      <button class="closeBtn" id="closeBtn">Ok 💘</button>
+      <div class="footerNote">
+        <span class="mono" id="footLeft">Build: v2.0.0</span>
+        <span id="footRight">Modo: Simulação (zoeira)</span>
+      </div>
     </div>
   </div>
 
   <script>
-    const arena = document.getElementById("arena");
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const hint = document.getElementById("hint");
-    const modal = document.getElementById("modal");
-    const closeBtn = document.getElementById("closeBtn");
+    // Personalização via URL: ?nome=Djoi
+    const params = new URLSearchParams(location.search);
+    const NOME = (params.get("nome") || "Djoi").trim() || "Djoi";
 
-    function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+    const content = document.getElementById("content");
+    const stepBadge = document.getElementById("stepBadge");
+    const headerTitle = document.getElementById("headerTitle");
+    const statusText = document.getElementById("statusText");
+    const sessionPill = document.getElementById("sessionPill");
+    const card = document.getElementById("card");
+    const flash = document.getElementById("flash");
 
-    function moveNoButton(){
-      const a = arena.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
+    sessionPill.textContent = "Sessão: DJ01 • " + NOME.toUpperCase();
 
-      const maxX = a.width - b.width;
-      const maxY = a.height - b.height;
+    const state = {
+      step: 1,
+      blockedExits: 0,
+      audioUnlocked: false
+    };
 
-      const pad = 6;
-      const x = pad + Math.random() * (maxX - pad*2);
-      const y = pad + Math.random() * (maxY - pad*2);
-
-      noBtn.style.left = clamp(x, pad, maxX - pad) + "px";
-      noBtn.style.top  = clamp(y, pad, maxY - pad) + "px";
-
-      const msgs = [
-        "O “Não” escapou 🙈",
-        "Quase… 😅",
-        "Tenta de novo 👀",
-        "Ele não quer ser clicado 😈",
-        "Saiu correndo 🏃‍♂️💨"
-      ];
-      hint.textContent = msgs[Math.floor(Math.random()*msgs.length)];
+    /* ---------- Som (beeps) ---------- */
+    let audioCtx = null;
+    function ensureAudio(){
+      if (state.audioUnlocked) return;
+      try{
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        state.audioUnlocked = true;
+      }catch(e){}
+    }
+    function beep(freq=740, ms=90, type="sine", gain=0.06){
+      if (!audioCtx || !state.audioUnlocked) return;
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = type;
+      o.frequency.value = freq;
+      g.gain.value = gain;
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start();
+      setTimeout(()=>{ try{o.stop();}catch(e){} }, ms);
+    }
+    function beepSeq(list){
+      // list: [{f,ms,delay}]
+      let t = 0;
+      for (const it of list){
+        setTimeout(()=>beep(it.f, it.ms), t);
+        t += (it.delay ?? it.ms);
+      }
     }
 
-    noBtn.addEventListener("mouseenter", moveNoButton);
+    /* ---------- Vibração ---------- */
+    function vibrate(pattern){
+      try{
+        if (navigator.vibrate) navigator.vibrate(pattern);
+      }catch(e){}
+    }
 
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoButton();
-    }, { passive:false });
+    /* ---------- Helpers DOM ---------- */
+    function el(tag, attrs={}, children=[]){
+      const node = document.createElement(tag);
+      for (const [k,v] of Object.entries(attrs)){
+        if (k === "class") node.className = v;
+        else if (k === "html") node.innerHTML = v;
+        else if (k.startsWith("on") && typeof v === "function") node.addEventListener(k.slice(2), v);
+        else node.setAttribute(k, v);
+      }
+      for (const ch of children){
+        if (typeof ch === "string") node.appendChild(document.createTextNode(ch));
+        else node.appendChild(ch);
+      }
+      return node;
+    }
+    function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
+    function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
 
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      moveNoButton();
+    function shake(){
+      card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+    }
+    function flashOnce(){
+      flash.classList.add("on");
+      setTimeout(()=>flash.classList.remove("on"), 120);
+    }
+
+    function blockedExit(){
+      state.blockedExits++;
+      ensureAudio();
+      shake(); flashOnce();
+      beepSeq([{f:220,ms:90,delay:110},{f:180,ms:120,delay:140}]);
+      vibrate([60,40,60]);
+      statusText.textContent = "Ação bloqueada";
+      setTimeout(()=> statusText.textContent = "Sistema online", 900);
+    }
+
+    /* ---------- Botão fujão ---------- */
+    function makeRunner(btn, area){
+      // coloca o botão como absolute dentro da área
+      btn.classList.add("runner");
+
+      function move(){
+        const a = area.getBoundingClientRect();
+        const b = btn.getBoundingClientRect();
+
+        const maxX = a.width - b.width;
+        const maxY = a.height - b.height;
+
+        // se a área for muito pequena, não tenta
+        if (maxX < 10 || maxY < 10) return;
+
+        const pad = 4;
+        const x = pad + Math.random() * (maxX - pad*2);
+        const y = pad + Math.random() * (maxY - pad*2);
+
+        btn.style.left = clamp(x, pad, maxX - pad) + "px";
+        btn.style.top  = clamp(y, pad, maxY - pad) + "px";
+
+        ensureAudio();
+        beep(880, 45);
+        vibrate(20);
+      }
+
+      // foge no mouse e no toque
+      btn.addEventListener("mouseenter", move);
+      btn.addEventListener("touchstart", (e)=>{ e.preventDefault(); move(); }, {passive:false});
+      btn.addEventListener("click", (e)=>{ e.preventDefault(); move(); });
+
+      // posição inicial
+      setTimeout(move, 40);
+    }
+
+    /* ---------- Easter egg (Konami Code) ---------- */
+    const konami = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+    let kpos = 0;
+    window.addEventListener("keydown", (e)=>{
+      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      const target = konami[kpos];
+      const match = (target.length === 1) ? (key === target) : (e.key === target);
+      if (match){
+        kpos++;
+        if (kpos === konami.length){
+          kpos = 0;
+          secretMode();
+        }
+      } else {
+        kpos = 0;
+      }
     });
 
-    yesBtn.addEventListener("click", () => modal.classList.add("open"));
-    closeBtn.addEventListener("click", () => modal.classList.remove("open"));
-    modal.addEventListener("click", (e) => { if(e.target === modal) modal.classList.remove("open"); });
+    function secretMode(){
+      ensureAudio();
+      beepSeq([{f:523,ms:80,delay:110},{f:659,ms:80,delay:110},{f:784,ms:120,delay:150}]);
+      vibrate([30,30,30,60]);
+      showPopup("🕹️", `Easter egg desbloqueado! ${NOME}, parabéns: agora o sistema sabe que tu és gamer… e mesmo assim chegas atrasado 😈`);
+    }
 
-    moveNoButton();
+    /* ---------- Render ---------- */
+    function setStep(n){
+      state.step = n;
+      stepBadge.textContent = `PASSO ${n}/7`;
+      render();
+    }
+
+    function render(){
+      clear(content);
+
+      if (state.step === 1){
+        headerTitle.textContent = "Relatório do Sistema";
+        content.append(
+          el("p",{class:"big"},["❌ ERRO CRÍTICO DO SISTEMA"]),
+          el("p",{class:"sub"},[
+            `Comportamento suspeito detectado na sessão `,
+            el("span",{class:"mono"},["DJ01"]),
+            `. Utilizador: `,
+            el("span",{class:"mono"},[NOME.toUpperCase()]),
+            "."
+          ]),
+          el("div",{class:"alert"},[
+            el("div",{},["⚠️"]),
+            el("div",{},[
+              el("div",{},[el("b",{},["Aviso: "]), "não feche esta página."]),
+              el("div",{class:"tiny mono"},["Código: EXC-042 / Modo: AUTO-ANÁLISE"])
+            ])
+          ]),
+          el("div",{class:"buttons"},[
+            el("button",{class:"primary", onclick:()=>{ensureAudio(); beep(740,80); setStep(2);}},["🔍 Analisar agora"]),
+            el("button",{class:"danger", onclick:blockedExit},["❌ Sair"])
+          ]),
+          el("div",{class:"tiny"},[
+            "Dica: tenta clicar em “Sair” 😇"
+          ])
+        );
+      }
+
+      if (state.step === 2){
+        headerTitle.textContent = "A gerar relatório…";
+        content.append(
+          el("p",{class:"big"},["⏳ Preparando análise automática"]),
+          el("p",{class:"sub"},[
+            "Aguarde. O sistema está a compilar padrões comportamentais…"
+          ]),
+          el("div",{class:"progressWrap"},[
+            el("div",{class:"progressLine"},[
+              el("div",{class:"progressBar", id:"pbar"})
+            ])
+          ]),
+          el("p",{class:"sub mono", id:"cdText"},["Iniciando…"])
+        );
+
+        const btnRow = el("div",{class:"buttons"},[
+          el("button",{class:"good", id:"viewBtn", disabled:"true", onclick:()=>{ensureAudio(); beep(660,90); setStep(3);}},["▶️ Ver relatório"])
+        ]);
+        content.append(btnRow);
+
+        // countdown + beeps
+        let t = 5;
+        const cdText = document.getElementById("cdText");
+        const pbar = document.getElementById("pbar");
+        const viewBtn = document.getElementById("viewBtn");
+
+        const tick = () => {
+          const pct = ((5 - t) / 5) * 100;
+          pbar.style.width = pct + "%";
+          cdText.textContent = `A gerar relatório… ${t}s`;
+
+          // beeps e vibração leve (se suportar)
+          ensureAudio();
+          beep(520 + (5-t)*40, 55);
+          vibrate(15);
+
+          if (t <= 0){
+            pbar.style.width = "100%";
+            cdText.textContent = "Relatório concluído.";
+            viewBtn.disabled = false;
+            viewBtn.removeAttribute("disabled");
+            ensureAudio();
+            beepSeq([{f:784,ms:70,delay:90},{f:988,ms:90,delay:110}]);
+            vibrate([30,20,40]);
+            return;
+          }
+          setTimeout(()=>{ t--; tick(); }, 800);
+        };
+
+        setTimeout(()=>{ ensureAudio(); tick(); }, 300);
+      }
+
+      if (state.step === 3){
+        headerTitle.textContent = "Perfil detectado";
+        content.append(
+          el("p",{class:"big"},["🧠 Perfil carregado com sucesso"]),
+          el("p",{class:"sub"},[
+            "Identidade confirmada. A seguinte ficha foi montada com base em evidências (100% científicas)."
+          ]),
+          el("div",{class:"kvs"},[
+            kv("Nome", NOME),
+            kv("Estado", "Online (mas… responde?)"),
+            kv("Dispositivo", "Telemóvel"),
+            kv("Responsabilidade", "❌ Baixa"),
+            kv("Pontualidade", "❌ Em análise"),
+            kv("WhatsApp", "❌ Irregular")
+          ]),
+          el("div",{class:"buttons"},[
+            el("button",{class:"primary", onclick:()=>{ensureAudio(); beep(740,70); setStep(4);}},["📊 Ver detalhes"]),
+            el("button",{class:"warn", onclick:()=>{ensureAudio(); beep(420,90); showPopup("😐", "Real o suficiente para te preocupar… só um bocadinho.");}},["❓ Isto é real?"])
+          ]),
+          el("div",{class:"tiny"},[
+            "Dica secreta: no teclado, tenta o Konami code 😉 (↑↑↓↓←→←→BA)"
+          ])
+        );
+      }
+
+      if (state.step === 4){
+        headerTitle.textContent = "Padrões comportamentais";
+        content.append(
+          el("p",{class:"big"},["📊 Detalhes do comportamento"]),
+          el("p",{class:"sub"},[
+            "Foram identificados padrões recorrentes. Clique com responsabilidade."
+          ]),
+          el("div",{class:"kvs"},[
+            kv("Padrão #1", "Promete “já vou”"),
+            kv("Padrão #2", "Some por horas"),
+            kv("Padrão #3", "Aparece quando já acabou"),
+            kv("Padrão #4", "“Vi agora” (clássico)")
+          ]),
+          el("div",{class:"buttons"},[
+            el("button",{class:"primary", onclick:()=>{ensureAudio(); beep(720,70); setStep(5);}},["📈 Ver estatísticas"]),
+            el("button",{onclick:()=>setStep(3)},["🔙 Voltar ao perfil"])
+          ])
+        );
+      }
+
+      if (state.step === 5){
+        headerTitle.textContent = "Estatísticas";
+        content.append(
+          el("p",{class:"big"},["📈 Estatísticas oficiais"]),
+          el("p",{class:"sub"},[
+            "Medições feitas com instrumentos avançados: ",
+            el("span",{class:"mono"},["Olho + Memória + Zoação"]),
+            "."
+          ])
+        );
+
+        const bars = el("div",{class:"bars"},[
+          bar("Pontualidade", 12),
+          bar("Cumprimento de planos", 18),
+          bar("Desculpas criativas", 94),
+          bar("Lealdade de amigo", 100)
+        ]);
+        content.append(bars);
+
+        setTimeout(()=>{
+          for (const fill of content.querySelectorAll(".barFill")){
+            fill.style.width = fill.getAttribute("data-pct") + "%";
+          }
+          ensureAudio();
+          beepSeq([{f:660,ms:55,delay:70},{f:740,ms:55,delay:70},{f:820,ms:55,delay:70}]);
+        }, 80);
+
+        content.append(
+          el("div",{class:"hr"}),
+          el("div",{class:"buttons", id:"btnArea"},[
+            el("button",{class:"primary", onclick:()=>{ensureAudio(); beep(740,90); setStep(6);}},["🧾 Gerar relatório final"]),
+            el("button",{class:"danger", id:"exitBtn"},["❌ Encerrar sistema"])
+          ]),
+          el("div",{class:"tiny"},[
+            "Encerrar sistema: experimental. Aproxima o dedo com cuidado 😈"
+          ])
+        );
+
+        // ativa o botão fujão aqui
+        const area = document.getElementById("btnArea");
+        const exitBtn = document.getElementById("exitBtn");
+        makeRunner(exitBtn, area);
+      }
+
+      if (state.step === 6){
+        headerTitle.textContent = "Relatório final";
+        content.append(
+          el("p",{class:"big"},["💥 RELATÓRIO FINAL CONCLUÍDO"]),
+          el("p",{class:"sub"},[
+            "Antes de continuar: respira. Isto vai doer um bocadinho (no ego)."
+          ]),
+          el("div",{class:"alert"},[
+            el("div",{},["✅"]),
+            el("div",{},[
+              el("div",{},[
+                el("b",{},["Calma, "]), `${NOME}. `
+              ]),
+              el("div",{},[
+                "Isto não é um sistema secreto. ",
+                "É só o teu melhor amigo a provar que te conhece demasiado bem 😈"
+              ])
+            ])
+          ]),
+          el("div",{class:"kvs"},[
+            kv("Conclusão", "Ainda és atrasado, mas és nosso ❤️"),
+            kv("Risco", "Moderado (pode levar roast)"),
+            kv("Recomendação", "Responder mensagens + aparecer no horário")
+          ]),
+          el("div",{class:"buttons"},[
+            el("button",{class:"good", onclick:()=>{ensureAudio(); beepSeq([{f:784,ms:70,delay:90},{f:988,ms:90,delay:110}]); setStep(7);}},["✅ Aceitar a verdade"]),
+            el("button",{onclick:()=>setStep(1)},["🔁 Rever do início"])
+          ])
+        );
+      }
+
+      if (state.step === 7){
+        headerTitle.textContent = "Caso encerrado";
+        content.append(
+          el("p",{class:"big"},["🤡 Caso arquivado com sucesso"]),
+          el("p",{class:"sub"},["Resultado final do sistema:"]),
+          el("div",{class:"kvs"},[
+            kv("Status", "Amigo aprovado ✅"),
+            kv("Atraso crónico", "Confirmado ✅"),
+            kv("Caos", "Elevado ✅"),
+            kv("Carisma", "Infelizmente alto ✅")
+          ]),
+          el("div",{class:"buttons"},[
+            el("button",{class:"primary", onclick:()=>{ensureAudio(); beep(880,90); showPopup("🎉", `Parabéns, ${NOME}: foste auditado e continuas amigo. Agora responde no WhatsApp 😈`);}},["🎉 Ver certificado"]),
+            el("button",{class:"good", onclick:()=>{ensureAudio(); beepSeq([{f:523,ms:70,delay:90},{f:659,ms:70,delay:90},{f:784,ms:120,delay:140}]); showPopup("✅", "Sistema encerrado. Até à próxima auditoria 😈");}},["🚪 Sair do sistema"]),
+            el("button",{onclick:()=>setStep(1)},["🔁 Repetir zoeira"])
+          ]),
+          el("div",{class:"tiny"},[
+            "Dica de envio: “Djoi, abre isso e tenta clicar em ‘Encerrar sistema’ 😇”"
+          ])
+        );
+      }
+    }
+
+    function kv(k, v){
+      return el("div",{class:"kv"},[
+        el("span",{},[k]),
+        el("b",{},[v])
+      ]);
+    }
+
+    function bar(name, pct){
+      return el("div",{class:"barRow"},[
+        el("div",{class:"name"},[name]),
+        el("div",{class:"barTrack"},[
+          el("div",{class:"barFill", "data-pct": String(pct)},[])
+        ]),
+        el("div",{class:"barVal"},[pct + "%"])
+      ]);
+    }
+
+    // Popup simples
+    function showPopup(icon, text){
+      const overlay = el("div", {
+        style: `
+          position:fixed; inset:0; display:grid; place-items:center;
+          background: rgba(0,0,0,.55); padding:18px; z-index:9999;
+        `
+      });
+      const box = el("div", {
+        style: `
+          width:min(560px,92vw);
+          background:#0f1621;
+          border:1px solid rgba(255,255,255,.10);
+          border-radius:18px;
+          box-shadow: 0 30px 90px rgba(0,0,0,.65);
+          padding:18px;
+        `
+      }, [
+        el("div",{style:"display:flex; align-items:center; gap:10px; font-weight:900; font-size:18px; margin-bottom:10px;"},[
+          el("div",{},[icon]),
+          el("div",{},["Mensagem do sistema"])
+        ]),
+        el("div",{style:"color:rgba(232,238,246,.85); line-height:1.35; margin-bottom:14px;"},[text]),
+        el("div",{style:"display:flex; gap:10px; justify-content:flex-end;"},[
+          el("button",{class:"good", onclick:()=>document.body.removeChild(overlay)},["OK"])
+        ])
+      ]);
+      overlay.addEventListener("click", (e)=>{ if(e.target === overlay) document.body.removeChild(overlay); });
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+    }
+
+    // desbloqueia áudio no primeiro toque/click (regras do browser)
+    window.addEventListener("pointerdown", ()=>ensureAudio(), {once:true});
+
+    render();
   </script>
 </body>
 </html>
